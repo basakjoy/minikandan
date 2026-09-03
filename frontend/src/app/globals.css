@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Poppins', var(--font-poppins), system-ui, -apple-system, sans-serif;
+  --font-poppins: 'Poppins', var(--font-poppins), sans-serif;
+}
+
+:root {
+  --background: #000000;
+  --foreground: #f8fafc;
+  --font-poppins: 'Poppins', sans-serif;
+}
+
+* {
+  font-family: 'Poppins', var(--font-poppins), system-ui, -apple-system, sans-serif !important;
+}
+
+body {
+  background-color: #000000;
+  color: #f8fafc;
+  font-family: 'Poppins', var(--font-poppins), system-ui, -apple-system, sans-serif !important;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(30, 27, 75, 0.25) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(24, 24, 27, 0.4) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(15, 23, 42, 0.3) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, rgba(49, 46, 129, 0.15) 0px, transparent 50%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Liquid Glass Ambient Orbs (Pure Obsidian) */
+.liquid-bg-blob-1 {
+  position: fixed;
+  top: -15%;
+  left: 15%;
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+  animation: floatOrb 20s ease-in-out infinite alternate;
+}
+
+.liquid-bg-blob-2 {
+  position: fixed;
+  bottom: -10%;
+  right: 10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+  filter: blur(110px);
+  pointer-events: none;
+  z-index: 0;
+  animation: floatOrb 25s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes floatOrb {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  50% {
+    transform: translate(30px, -40px) scale(1.08);
+  }
+  100% {
+    transform: translate(-40px, 20px) scale(0.92);
+  }
+}
+
+/* Black Liquid Glass Utilities */
+.glass-card {
+  background: rgba(10, 10, 12, 0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 12px 36px 0 rgba(0, 0, 0, 0.7),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.glass-card-hover {
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.glass-card-hover:hover {
+  background: rgba(18, 18, 22, 0.85);
+  border-color: rgba(99, 102, 241, 0.45);
+  box-shadow: 
+    0 20px 50px -10px rgba(0, 0, 0, 0.9),
+    0 0 25px 0 rgba(99, 102, 241, 0.2),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
+  transform: translateY(-3px) scale(1.005);
+}
+
+.glass-panel {
+  background: rgba(8, 8, 10, 0.75);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 12px 48px 0 rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+}
+
+.glass-modal {
+  background: rgba(6, 6, 8, 0.9);
+  backdrop-filter: blur(28px) saturate(200%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 
+    0 32px 80px -12px rgba(0, 0, 0, 0.95),
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.2);
+}
+
+.glass-input {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.glass-input:focus {
+  background: rgba(0, 0, 0, 0.9);
+  border-color: rgba(99, 102, 241, 0.6);
+  box-shadow: 
+    0 0 20px rgba(99, 102, 241, 0.3),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.1);
+  outline: none;
+}
+
+.glass-btn-primary {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.95) 0%, rgba(79, 70, 229, 0.95) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 4px 20px rgba(79, 70, 229, 0.4),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.25s ease;
+}
+
+.glass-btn-primary:hover {
+  background: linear-gradient(135deg, rgba(129, 140, 248, 0.95) 0%, rgba(99, 102, 241, 0.95) 100%);
+  box-shadow: 
+    0 6px 28px rgba(99, 102, 241, 0.55),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.glass-btn-secondary {
+  background: rgba(18, 18, 22, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.2s ease;
+}
+
+.glass-btn-secondary:hover {
+  background: rgba(30, 30, 36, 0.9);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+/* Custom Scrollbar for Black Liquid UI */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.5);
+}
+
