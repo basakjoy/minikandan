@@ -9,12 +9,19 @@ import { JwtStrategy } from './jwt.strategy';
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
-      useFactory: () => ({
-        secret: process.env.JWT_SECRET || 'super-secret-jwt-key-kanban-board-2026',
+      useFactory: () => {
+        const secret = process.env.JWT_SECRET;
+        if (!secret) {
+          throw new Error('JWT_SECRET must be configured');
+        }
+
+        return {
+          secret,
         signOptions: {
           expiresIn: (process.env.JWT_EXPIRES_IN || '7d') as any,
         },
-      }),
+        };
+      },
     }),
   ],
   controllers: [AuthController],
