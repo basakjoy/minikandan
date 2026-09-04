@@ -12,7 +12,15 @@ async function bootstrap() {
     .filter(Boolean);
 
   app.enableCors({
-    origin: corsOrigins,
+    origin: (requestOrigin, callback) => {
+      const isVercelOrigin = requestOrigin?.match(/^https:\/\/[a-z0-9-]+\.vercel\.app$/i);
+      if (!requestOrigin || corsOrigins.includes(requestOrigin) || isVercelOrigin) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error('Origin is not allowed by CORS'));
+    },
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type,Accept,Authorization',
