@@ -2,13 +2,13 @@
 
 A full-stack, collaborative Kanban board built to demonstrate production-grade patterns for authentication, authorization, and real-time-feeling task management. The stack is Next.js on the frontend, NestJS and PostgreSQL (via Prisma) on the backend, with everything containerized through Docker Compose for a one-command local setup.
 
-This project was built as a full-stack engineering exercise, with an emphasis on getting the "boring but hard" parts right: role-based permissions, transactional data integrity during drag-and-drop reordering, and a clean separation between the API and the client.
+This project was built as a full-stack engineering exercise, with an emphasis on getting the "boring but hard" parts right: role-based permissions, transactional data integrity during drag and drop reordering, and a clean separation between the API and the client.
 
 ## Why these choices
 
 Kanban boards look simple on the surface, but they surface a lot of real engineering problems once you add multiple users editing the same board at once. A few decisions worth explaining:
 
-- **Role-based access control** rather than a simple "owner vs. everyone else" model, because most teams need a middle ground — someone who can move cards around without being able to delete the board or change who has access.
+- **Role-based access control** rather than a simple "owner vs. everyone else" model, because most teams need a middle ground someone who can move cards around without being able to delete the board or change who has access.
 - **Float-based ordering** (`order: Float`) for columns and tasks instead of integers. This avoids full-table renumbering every time a card is dropped between two others, which matters once a board has any real traffic.
 - **A dedicated, transactional move endpoint** rather than letting the client PATCH a task's column and order independently. Reordering is the one place where partial writes cause visible, confusing bugs, so it gets wrapped in a single Prisma transaction.
 
@@ -24,11 +24,11 @@ Kanban boards look simple on the surface, but they surface a lot of real enginee
 ## Features
 
 **Authentication and access control**
-Registration and login run on JWTs, with passwords hashed via bcrypt — nothing stored in plain text, nothing rolled by hand where a well-tested library will do. Once inside a board, a user holds one of three roles:
+Registration and login run on JWTs, with passwords hashed via bcrypt nothing stored in plain text, nothing rolled by hand where a well-tested library will do. Once inside a board, a user holds one of three roles:
 
-- *Owner* — full control: editing the board, inviting or removing members, changing roles, and managing columns and tasks.
-- *Editor* — day-to-day workflow management: creating, editing, moving, and deleting tasks and columns.
-- *Viewer* — read access only, useful for stakeholders who need visibility without edit rights.
+- *Owner* - full control: editing the board, inviting or removing members, changing roles, and managing columns and tasks.
+- *Editor* - day to day workflow management: creating, editing, moving, and deleting tasks and columns.
+- *Viewer* - read access only, useful for stakeholders who need visibility without edit rights.
 
 Every mutating endpoint checks the caller's role against the board before touching data, so a viewer token can't be used to sneak in a write, and a member of one board can't reach into another board's tasks.
 
@@ -36,7 +36,7 @@ Every mutating endpoint checks the caller's role against the board before touchi
 The `PATCH /api/tasks/:id/move` endpoint handles moving a task within a column or across columns to a specific position. The reorder happens inside a Prisma transaction so that a failed or interrupted request can't leave two tasks sharing the same position, or leave a column's ordering out of sequence.
 
 **Frontend**
-The board view uses `@hello-pangea/dnd` for drag-and-drop, with optimistic updates so the UI feels immediate even before the server confirms the move. Tasks carry priority (Low/Medium/High/Urgent), optional due dates with an overdue indicator, and an assignee. A search bar filters by keyword, priority, or assignee in real time. Board collaborators are managed through a modal that supports searching for users and setting their role at invite time.
+The board view uses `@hello-pangea/dnd` for drag and drop, with optimistic updates so the UI feels immediate even before the server confirms the move. Tasks carry priority (Low/Medium/High/Urgent), optional due dates with an overdue indicator, and an assignee. A search bar filters by keyword, priority, or assignee in real time. Board collaborators are managed through a modal that supports searching for users and setting their role at invite time.
 
 ## Getting started
 
@@ -46,7 +46,7 @@ The board view uses `@hello-pangea/dnd` for drag-and-drop, with optimistic updat
 - npm 9+
 - PostgreSQL 16+ running locally, or Docker
 
-### Option A — Docker Compose
+### Option A - Docker Compose
 
 The fastest path to a running instance:
 
@@ -60,7 +60,7 @@ Once it's up:
 - Backend API: http://localhost:4000/api
 - Swagger docs: http://localhost:4000/api/docs
 
-### Option B — Running it manually
+### Option B - Running it manually
 
 If you'd rather run the frontend and backend yourself (useful for debugging or active development):
 
@@ -102,7 +102,7 @@ The seed script creates three users on a shared sample board, one at each permis
 | Alex Developer | naim@gmail.com | 12345678 | Owner |
 
 
-The login screen also has one-click buttons for each of these, which is worth using if you just want to see how the app behaves rather than typing credentials.
+The login screen also has one click buttons for each of these, which is worth using if you just want to see how the app behaves rather than typing credentials.
 
 ## Database schema
 
@@ -237,4 +237,4 @@ The move endpoint takes a body like:
 
 ## Testing and verification
 
-The project builds cleanly with zero TypeScript errors across both frontend and backend. Task movement and reordering have been exercised end-to-end to confirm the transaction behaves correctly under concurrent moves, and board-level authorization has been checked to make sure a user can't reach data on a board they don't belong to. Full API documentation is generated automatically and served through Swagger at `/api/docs`.
+The project builds cleanly with zero TypeScript errors across both frontend and backend. Task movement and reordering have been exercised end to end to confirm the transaction behaves correctly under concurrent moves, and board level authorization has been checked to make sure a user can't reach data on a board they don't belong to. Full API documentation is generated automatically and served through Swagger at `/api/docs`.
