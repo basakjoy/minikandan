@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
+import { getApiErrorMessage } from '@/lib/api';
 import { Kanban, Lock, Mail, Loader2, ArrowRight, Sparkles } from 'lucide-react';
 
 export default function LoginPage() {
@@ -18,9 +19,9 @@ export default function LoginPage() {
     try {
       setIsSubmitting(true);
       setError(null);
-      await login(email, password);
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Invalid email or password');
+      await login(email.trim(), password);
+    } catch (error: unknown) {
+      setError(getApiErrorMessage(error, 'Invalid email or password'));
     } finally {
       setIsSubmitting(false);
     }

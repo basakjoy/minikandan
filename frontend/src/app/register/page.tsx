@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
+import { getApiErrorMessage } from '@/lib/api';
 import { Kanban, Lock, Mail, User, Loader2, ArrowRight } from 'lucide-react';
 
 export default function RegisterPage() {
@@ -16,6 +17,11 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (name.trim().length === 0) {
+      setError('Name is required');
+      return;
+    }
+
     if (password.length < 6) {
       setError('Password must be at least 6 characters long');
       return;
@@ -24,9 +30,9 @@ export default function RegisterPage() {
     try {
       setIsSubmitting(true);
       setError(null);
-      await register(email, name, password);
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to register account');
+      await register(email.trim(), name.trim(), password);
+    } catch (error: unknown) {
+      setError(getApiErrorMessage(error, 'Failed to register account'));
     } finally {
       setIsSubmitting(false);
     }

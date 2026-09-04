@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api';
 
@@ -8,6 +8,23 @@ export const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+export function getApiErrorMessage(error: unknown, fallback: string): string {
+  if (!axios.isAxiosError(error)) {
+    return fallback;
+  }
+
+  if (!error.response) {
+    return 'Unable to connect to the API. Please try again.';
+  }
+
+  const responseMessage = (error as AxiosError<{ message?: string | string[] }>).response?.data?.message;
+  if (Array.isArray(responseMessage)) {
+    return responseMessage.join(' ');
+  }
+
+  return responseMessage || fallback;
+}
 
 api.interceptors.request.use(
   (config) => {
