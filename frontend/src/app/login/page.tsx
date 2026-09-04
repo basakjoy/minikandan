@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { getApiErrorMessage } from '@/lib/api';
-import { Kanban, Lock, Mail, Loader2, ArrowRight, Sparkles } from 'lucide-react';
+import { Kanban, Lock, Mail, Loader2, ArrowRight } from 'lucide-react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -25,11 +25,6 @@ export default function LoginPage() {
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleQuickLogin = (demoEmail: string) => {
-    setEmail(demoEmail);
-    setPassword('Password123!');
   };
 
   return (
@@ -108,40 +103,6 @@ export default function LoginPage() {
               )}
             </button>
           </form>
-
-          {/* Quick Demo Logins for Evaluator */}
-          <div className="mt-6 pt-6 border-t border-white/10">
-            <div className="flex items-center space-x-1.5 text-xs font-semibold text-indigo-300 mb-3">
-              <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-              <span>1-Click Demo Accounts:</span>
-            </div>
-            <div className="grid grid-cols-3 gap-2">
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('alex@example.com')}
-                className="glass-btn-secondary py-2 px-2 rounded-xl text-[11px] text-slate-300 transition text-center"
-              >
-                <span className="font-semibold block text-indigo-300">Alex</span>
-                <span className="text-[10px] text-slate-400 block">Owner</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('sarah@example.com')}
-                className="glass-btn-secondary py-2 px-2 rounded-xl text-[11px] text-slate-300 transition text-center"
-              >
-                <span className="font-semibold block text-emerald-300">Sarah</span>
-                <span className="text-[10px] text-slate-400 block">Editor</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('david@example.com')}
-                className="glass-btn-secondary py-2 px-2 rounded-xl text-[11px] text-slate-300 transition text-center"
-              >
-                <span className="font-semibold block text-amber-300">David</span>
-                <span className="text-[10px] text-slate-400 block">Viewer</span>
-              </button>
-            </div>
-          </div>
 
           {/* Sign Up Link */}
           <div className="mt-6 text-center text-xs text-slate-400">
